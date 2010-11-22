@@ -4,4 +4,4 @@ $:.unshift(dir) unless $:.include?(dir) || $:.include?(File.expand_path(dir))
 
 require 'auth'
 require 'client'
-require_relative 'core-ext/hash/keys.rb'
+require_relative 'rets/core-ext/hash/keys.rb'
