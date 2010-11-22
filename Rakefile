@@ -5,8 +5,11 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rets"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{API for connection to RETS Server}
+    gem.description = %Q{This borrows heavily from the rets4r gem. I've only included certain features that I know to work. 
+                         For example it has only been tested on RETS 1.7 and Ruby 1.9.2.
+                         At some point the minor changes that were made can hopefully just be added to rets4r.
+                      }
     gem.email = "secrosley@gmail.com"
     gem.homepage = "http://github.com/Shazzaam/rets"
     gem.authors = ["scrosley"]
