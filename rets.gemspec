@@ -28,8 +28,6 @@ Gem::Specification.new do |s|
      "VERSION",
      "examples/client_login.rb",
      "examples/client_search.rb",
-     "examples/map.txt",
-     "examples/settings.yml",
      "lib/rets.rb",
      "lib/rets/auth.rb",
      "lib/rets/client.rb",
