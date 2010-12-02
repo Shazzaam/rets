@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rets}
-  s.version = "0.0.1"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["scrosley"]
-  s.date = %q{2010-11-22}
+  s.date = %q{2010-12-01}
   s.description = %q{This borrows heavily from the rets4r gem. I've only included certain features that I know to work. 
                          For example it has only been tested on RETS 1.7 and Ruby 1.9.2.
                          At some point the minor changes that were made can hopefully just be added to rets4r.

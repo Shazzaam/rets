@@ -4,6 +4,7 @@ require 'uri'
 require 'cgi'
 require 'parsers/response_parser'
 require 'dataobject'
+require 'logger'
 
 module RETS
   class Client
@@ -58,7 +59,8 @@ module RETS
       else
         @headers[name] = value
       end
-
+      
+      logger.debug("Set header '#{name}' to '#{value}'") if logger
     end
   
     def get_header(name)
@@ -93,6 +95,15 @@ module RETS
       # Basic Authentication
       @request_method
     end
+    
+    def logger=(logger)
+      @logger = logger
+      @request_struct.logger = logger
+    end
+
+    def logger
+      @logger
+    end
   
     def login(username, password)
       @username = username
@@ -117,7 +128,7 @@ module RETS
             @urls[capability] = base
           end
         end
-        #puts "Capability URL List: #{@urls.inspect}"
+        logger.debug("Capability URL List: #{@urls.inspect}") if logger
       else
         raise LoginError.new(response.message + "(#{results.reply_code}: #{results.reply_text})")
       end
@@ -287,7 +298,9 @@ module RETS
       http = Net::HTTP.new(url.host, url.port)
       http.read_timeout = 600
       
-      http.set_debug_output $stderr
+      if logger && logger.debug?
+        http.set_debug_output HTTPDebugLogger.new(logger)
+      end
         
       http.start do |http|
         begin
@@ -299,7 +312,7 @@ module RETS
           headers = @headers
           headers.merge(header) unless header.empty?
           
-          headers.inspect
+          logger.debug(headers.inspect) if logger
         
           @semaphore.unlock
         
@@ -345,7 +358,9 @@ module RETS
             @semaphore.unlock if @semaphore.locked?
             raise LoginError.new(response.message)
           end
-        end      
+        end
+        
+        logger.debug(response.body) if logger
       end
       
       @semaphore.unlock if @semaphore.locked?
@@ -368,6 +383,17 @@ module RETS
         end
       rescue
         raise RETSException.new("Unable to follow action URL: '#{$!}'.")
+      end
+    end
+    
+    # Provides a proxy class to allow for net/http to log its debug to the logger.
+    class HTTPDebugLogger
+      def initialize(logger)
+        @logger = logger
+      end
+
+      def <<(data)
+        @logger.debug(data)
       end
     end
     
