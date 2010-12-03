@@ -28,7 +28,7 @@ module RETS
         'Update'
     ]
     
-    attr_accessor :mimemap
+    attr_accessor :mimemap, :logger
     attr_reader   :format
   
     def initialize(url, user_agent, format = COMPACT_FORMAT)
@@ -94,15 +94,6 @@ module RETS
     def request_method
       # Basic Authentication
       @request_method
-    end
-    
-    def logger=(logger)
-      @logger = logger
-      @request_struct.logger = logger
-    end
-
-    def logger
-      @logger
     end
   
     def login(username, password)
