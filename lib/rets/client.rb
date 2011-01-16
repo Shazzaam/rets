@@ -402,5 +402,63 @@ module RETS
     # is prompted for.
     class AuthRequired < RETSException
     end
+    
+    # A RETS transaction failed
+    class RETSTransactionException < RETSException; end
+
+    # Search Transaction Exceptions
+    class UnknownQueryFieldException < RETSTransactionException; end
+    class NoRecordsFoundException < RETSTransactionException; end
+    class InvalidSelectException < RETSTransactionException; end
+    class MiscellaneousSearchErrorException < RETSTransactionException; end
+    class InvalidQuerySyntaxException < RETSTransactionException; end
+    class UnauthorizedQueryException < RETSTransactionException; end
+    class MaximumRecordsExceededException < RETSTransactionException; end
+    class TimeoutException < RETSTransactionException; end
+    class TooManyOutstandingQueriesException < RETSTransactionException; end
+    class DTDVersionUnavailableException < RETSTransactionException; end
+
+    # GetObject Exceptions
+    class InvalidResourceException < RETSTransactionException; end
+    class InvalidTypeException < RETSTransactionException; end
+    class InvalidIdentifierException < RETSTransactionException; end
+    class NoObjectFoundException < RETSTransactionException; end
+    class UnsupportedMIMETypeException < RETSTransactionException; end
+    class UnauthorizedRetrievalException < RETSTransactionException; end
+    class ResourceUnavailableException < RETSTransactionException; end
+    class ObjectUnavailableException < RETSTransactionException; end
+    class RequestTooLargeException < RETSTransactionException; end
+    class TimeoutException < RETSTransactionException; end
+    class TooManyOutstandingRequestsException < RETSTransactionException; end
+    class MiscellaneousErrorException < RETSTransactionException; end
+
+    EXCEPTION_TYPES = {
+      # Search Transaction Reply Codes
+      20200 => UnknownQueryFieldException,
+      20201 => NoRecordsFoundException,
+      20202 => InvalidSelectException,
+      20203 => MiscellaneousSearchErrorException,
+      20206 => InvalidQuerySyntaxException,
+      20207 => UnauthorizedQueryException,
+      20208 => MaximumRecordsExceededException,
+      20209 => TimeoutException,
+      20210 => TooManyOutstandingQueriesException,
+      20514 => DTDVersionUnavailableException,
+
+      # GetObject Reply Codes
+      20400 => InvalidResourceException,
+      20401 => InvalidTypeException,
+      20402 => InvalidIdentifierException,
+      20403 => NoObjectFoundException,
+      20406 => UnsupportedMIMETypeException,
+      20407 => UnauthorizedRetrievalException,
+      20408 => ResourceUnavailableException,
+      20409 => ObjectUnavailableException,
+      20410 => RequestTooLargeException,
+      20411 => TimeoutException,
+      20412 => TooManyOutstandingRequestsException,
+      20413 => MiscellaneousErrorException
+
+    }    
   end
 end

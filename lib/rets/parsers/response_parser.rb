@@ -77,9 +77,14 @@ module RETS
 
       # XXX: If it turns out we need to parse the response of errors, then this will
       # need to change.
-      if transaction.reply_code.to_i > 0 && transaction.reply_code.to_i != 20201
-        exception_type = Client::EXCEPTION_TYPES[transaction.reply_code.to_i] || RETSTransactionException
-        raise exception_type, "#{transaction.reply_code} - #{transaction.reply_text}"
+      begin
+        if transaction.reply_code.to_i > 0 && transaction.reply_code.to_i != 20201
+          exception_type = Client::EXCEPTION_TYPES[transaction.reply_code.to_i] || RETSTransactionException
+          #raise exception_type, "#{transaction.reply_code} - #{transaction.reply_text}"
+        end
+      rescue Exception => e
+        puts e.message
+        puts "#{transaction.reply_code} - #{transaction.reply_text}"
       end
 
       transaction.response = yield doc
